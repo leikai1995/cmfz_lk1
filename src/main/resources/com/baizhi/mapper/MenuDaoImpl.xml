@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.MenuDao">
+
+
+	<insert id="insertItem" parameterType="Menu">
+		insert into menu (id,title,href,iconCls,parentId) values (#{id},#{title},#{href},#{iconCls},#{parentId});
+	</insert>
+
+	<resultMap id="rm" type="Menu">
+		<id property="id" column="id" />
+		<result property="title" column="title"/>
+		<result property="href" column="href"/>
+		<result property="iconCls" column="iconCls"/>
+		<collection property="slist" ofType="Menu">
+			<id property="id" column="sid" />
+			<result property="title" column="stitle"/>
+			<result property="href" column="shref"/>
+			<result property="iconCls" column="siconCls"/>
+		</collection>
+
+	</resultMap>
+
+
+	<select id="queryAll" resultMap="rm">
+		select f.id,f.title,f.href,f.iconcls,s.id sid,s.title stitle,s.href shref,s.iconcls siconcls FROM
+			menu f join menu s on f.ID=s.PARENTID
+	</select>
+</mapper>

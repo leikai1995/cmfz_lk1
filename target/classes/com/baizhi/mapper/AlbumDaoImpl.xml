@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.AlbumDao">
+
+	<resultMap id="rm1" type="Album">
+		<id property="id" column="id"/>
+		<result property="title" column="title" />
+		<result property="score" column="score" />
+		<result property="brodcast" column="brodcast" />
+		<result property="author" column="author" />
+		<result property="brief" column="brief" />
+		<result property="releaseTime" column="releaseTime" />
+		<result property="coverImg" column="coverImg" />
+		<result property="status" column="status" />
+		<collection property="children" ofType="Chapter">
+			<id property="id" column="cid" />
+			<result property="title" column="ctitle" />
+			<result property="url" column="url" />
+			<result property="size" column="size" />
+			<result property="duration" column="duration" />
+			<result property="createTime" column="createTime" />
+			<result property="albumId" column="id" />
+		</collection>
+
+	</resultMap>
+
+	<insert id="insertItem" parameterType="Album">
+		insert into album values (#{id},#{title},#{score},#{brodcast},#{author},#{brief},#{releaseTime},#{coverImg},#{status},#{count})
+	</insert>
+
+	<select id="queryAll" resultMap="rm1">
+		select a.id,a.title,score,brodcast,author,brief,releaseTime,coverImg,status,
+			c.id cid,c.title ctitle,url,size,duration,createTime,albumId
+			from album a left join chapter c on a.id=c.ALBUMID
+	</select>
+
+	<select id="queryById" resultMap="rm1">
+		select a.id,a.title,score,brodcast,author,brief,releaseTime,coverImg,status,
+			c.id cid,c.title ctitle,url,size,duration,createTime,albumId
+			from album a left join chapter c on a.id=c.ALBUMID
+		where a.id = #{id}
+	</select>
+
+
+
+
+</mapper>
