@@ -38,12 +38,8 @@ public class Admin {
         this.password = password;
     }
 
-    @Override
+    
     public String toString() {
-        return "Admin{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    	return "jx";
     }
 }
